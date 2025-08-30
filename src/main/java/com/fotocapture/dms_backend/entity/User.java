@@ -1,7 +1,6 @@
 package com.fotocapture.dms_backend.entity;
 
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,11 +12,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 64)
     private String username;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = true, length = 128)
+    private String fullName;
+
+    @Column(nullable = true)
+    private Integer dailyTargetMinutes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -29,8 +34,7 @@ public class User {
 
     // --- Constructors ---
 
-    public User() {
-    }
+    public User() { }
 
     public User(Long id, String username, String password, Set<Role> roles) {
         this.id = id;
@@ -71,5 +75,21 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Integer getDailyTargetMinutes() {
+        return dailyTargetMinutes;
+    }
+
+    public void setDailyTargetMinutes(Integer dailyTargetMinutes) {
+        this.dailyTargetMinutes = dailyTargetMinutes;
     }
 }
